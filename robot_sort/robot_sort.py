@@ -94,31 +94,25 @@ class SortingRobot:
         """
         return self._light == "ON"
 
-    def check_position(self):
-        return self._position
-
     def sort(self):
         """
         Sort the robot's list.
         """
-        # Fill this out
-        # iterate through range(0, len(list)-1)
-        for i in range(0, len(self._list)-1):
-            self.swap_item()
-            for j in range(i, len(self._list)):
+        self.swap_item()
+        self.set_light_on()
+        while self.light_is_on() == True:
+            self.set_light_off()
+            while self.can_move_right() == True:
                 self.move_right()
                 if self.compare_item() == 1:
                     self.swap_item()
-            while self.check_position() != i:
+                    self.set_light_on()
+            while self.compare_item() != None:
                 self.move_left()
             self.swap_item()
-            self.move_right()
-        # swap that item into your empty hands
-        # move right through the list, checking each number
-        # if the number in front is less than the one you're holding, swap
-        # if swapped, or if you have reached the end of the list, return to original Index
-        # swap the low number you have with what should be None
-        # move right once (unless at the end of the list)
+            if self.can_move_right() == True:
+                self.move_right()
+                self.swap_item()
 
 
 if __name__ == "__main__":
